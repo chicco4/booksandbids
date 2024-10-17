@@ -96,3 +96,25 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
     next(err);
   }
 }
+
+export const deleteUser: RequestHandler = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    if (!mongoose.isValidObjectId(userId)) {
+      throw createHttpError(400, "Invalid user ID");
+    }
+
+    const user = await userModel.findById(userId).exec();
+
+    if (!user) {
+      throw createHttpError(404, "User not found");
+    }
+
+    await user.deleteOne();
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+}
