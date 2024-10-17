@@ -1,35 +1,24 @@
-import { Request, Response } from 'express';
-import User from '../models/user.model';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
+import UserModel from '../models/user.model';
+import userModel from '../models/user.model';
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await User.find();
-    res.json(users);
+    const users = await UserModel.find().exec();
+    res.status(200).json(users);
   } catch (err) {
-    if (err instanceof Error) {
-      res.status(500).json({ message: err.message });
-    } else {
-      res.status(500).json({ message: "An unknown error occurred" });
-    }
+    next(err);
   }
 };
 
-export const createUser = async (req: Request, res: Response) => {
-  console.log(req.body);
-  
-  const user = new User({
-    name: req.body.name || 'Unnamed User',
-    email: req.body.email || 'No Email'
-  });
+export const createUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const name = req.body.name;
+  const email = req.body.email;
 
   try {
-    const newUser = await user.save();
+    const newUser = await userModel.create({ name: name, email: email });
     res.status(201).json(newUser);
   } catch (err) {
-    if (err instanceof Error) {
-      res.status(400).json({ message: err.message });
-    } else {
-      res.status(400).json({ message: "An unknown error occurred" });
-    }
+    next(err)
   }
 };
