@@ -1,7 +1,6 @@
 // Responsible for starting the server and listening on a specified port.
 // It typically imports the app.ts and calls the listen method.
 import app from './app';
-import "dotenv/config";
 import env from './utils/validate.env';
 import mongoose from 'mongoose';
 
