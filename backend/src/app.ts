@@ -2,9 +2,12 @@
 // It is the main entry point for the app logic.
 import express, { NextFunction, Request, Response } from 'express';
 import "dotenv/config";
+import morgan from 'morgan';
 import userRoutes from './routes/user.route';
 
 const app = express();
+
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
     res.send("BooksAndBids!");
