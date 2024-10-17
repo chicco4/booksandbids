@@ -7,6 +7,16 @@ import mongoose from 'mongoose';
 const PORT = env.PORT;
 const MONGO_URI = env.MONGO_URI;
 
+if (!PORT) {
+  console.error('PORT is not defined in the environment variables');
+  process.exit(1);
+}
+
+if (!MONGO_URI) {
+  console.error('MONGO_URI is not defined in the environment variables');
+  process.exit(1);
+}
+
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('Database connected');
