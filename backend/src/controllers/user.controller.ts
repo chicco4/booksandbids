@@ -18,7 +18,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
   const userId = req.params.userId;
 
   try {
-    if (mongoose.isValidObjectId(userId)) {
+    if (!mongoose.isValidObjectId(userId)) {
       throw createHttpError(400, "Invalid user ID");
     }
 
@@ -34,6 +34,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
   }
 };
 
+// they are optional becouse we can't be sure that the client will send the name and email
 interface createUserBody {
   name?: string;
   email?: string;
@@ -54,3 +55,44 @@ export const createUser: RequestHandler<unknown, unknown, createUserBody, unknow
     next(err)
   }
 };
+
+interface updateUserParams {
+  userId: string;
+}
+
+interface updateUserBody {
+  name?: string;
+  email?: string;
+}
+
+export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBody, unknown> = async (req, res, next) => {
+  const userId = req.params.userId;
+  const newName = req.body.name;
+  const newEmail = req.body.email;
+
+  try {
+    if (!mongoose.isValidObjectId(userId)) {
+      throw createHttpError(400, "Invalid user ID");
+    }
+
+    if (!newName || !newEmail) {
+      throw createHttpError(400, "Name and email are required");
+    }
+
+    // i could have used findByIdAndUpdate but i wanted to show how to use findById and save
+    const user = await userModel.findById(userId).exec();
+
+    if (!user) {
+      throw createHttpError(404, "User not found");
+    }
+
+    user.name = newName;
+    user.email = newEmail;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+}
