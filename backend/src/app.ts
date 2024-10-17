@@ -5,6 +5,10 @@ import userRoutes from './routes/user.route';
 
 const app = express();
 
+app.get("/", (req, res) => {
+    res.send("BooksAndBids!");
+});
+
 app.use(express.json());
 app.use('/api/users', userRoutes);
 

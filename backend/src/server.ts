@@ -1,10 +1,12 @@
 // Responsible for starting the server and listening on a specified port.
 // It typically imports the app.ts and calls the listen method.
 import app from './app';
+import "dotenv/config";
+import env from './utils/validate.env';
 import mongoose from 'mongoose';
 
-const PORT = 4000;
-const MONGO_URI = 'mongodb://admin:adminpassword@localhost:27017/mydatabase?authSource=admin';
+const PORT = env.PORT;
+const MONGO_URI = env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
   .then(() => {
@@ -16,7 +18,3 @@ mongoose.connect(MONGO_URI)
   .catch((error) => {
     console.error('Database connection error:', error);
   });
-
-app.get("/", (req, res) => {
-  res.send("BooksAndBids!");
-});

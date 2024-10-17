@@ -15,9 +15,11 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
+  console.log(req.body);
+  
   const user = new User({
-    name: req.body.name,
-    email: req.body.email
+    name: req.body.name || 'Unnamed User',
+    email: req.body.email || 'No Email'
   });
 
   try {
