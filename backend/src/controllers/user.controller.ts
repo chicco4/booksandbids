@@ -136,13 +136,13 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
       throw createHttpError(404, "User not found");
     }
 
-    user.username = newUsername || user.username;
-    user.email = newEmail || user.email;
+    user.username = newUsername ? newUsername : user.username;
+    user.email = newEmail ? newEmail : user.email;
     user.password = newPasswordRaw ? await bcrypt.hash(newPasswordRaw, 10) : user.password;
-    user.name = newName || user.name;
-    user.surname = newSurname || user.surname;
-    user.address = newAddress || user.address;
-    user.temporary = newTemporary || user.temporary;
+    user.name = newName ? newName : user.name;
+    user.surname = newSurname ? newSurname : user.surname;
+    user.address = newAddress ? newAddress : user.address;
+    user.temporary = newTemporary ? newTemporary : user.temporary;
 
     const updatedUser = await user.save();
 
