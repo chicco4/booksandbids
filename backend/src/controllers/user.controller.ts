@@ -58,7 +58,7 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
   const temporary = req.body.temporary;
 
   try {
-    if (!username! || !email || !passwordRaw || !role || !name || !surname || !address || !temporary) {
+    if (!username! || !email || !passwordRaw || !role ) {
       throw createHttpError(400, "Parameters missing");
     }
 
@@ -129,10 +129,6 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
       throw createHttpError(400, "Invalid user ID");
     }
 
-    if (!newUsername! || !newEmail || !newPasswordRaw || !newName || !newSurname || !newAddress || !newTemporary) {
-      throw createHttpError(400, "Parameters missing");
-    }
-
     // i could have used findByIdAndUpdate but i wanted to show how to use findById and save
     const user = await userModel.findById(userId).exec();
 
@@ -140,13 +136,13 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
       throw createHttpError(404, "User not found");
     }
 
-    user.username = newUsername;
-    user.email = newEmail;
-    user.password = await bcrypt.hash(newPasswordRaw, 10);
-    user.name = newName;
-    user.surname = newSurname;
-    user.address = newAddress;
-    user.temporary = newTemporary;
+    user.username = newUsername || user.username;
+    user.email = newEmail || user.email;
+    user.password = newPasswordRaw ? await bcrypt.hash(newPasswordRaw, 10) : user.password;
+    user.name = newName || user.name;
+    user.surname = newSurname || user.surname;
+    user.address = newAddress || user.address;
+    user.temporary = newTemporary || user.temporary;
 
     const updatedUser = await user.save();
 
