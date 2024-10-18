@@ -1,0 +1,13 @@
+{
+    "_id": "id",
+    "username": "user1",
+    "email": "email1",
+    "password": "password1",
+    "role": "student",
+    "name": "name1",
+    "surname": "surname1",
+    "address": "address1",
+    "moderator_invited_by": "moderatorId",
+    "is_first_login": false,
+    "temporary_password": "temporaryPassword"
+}
