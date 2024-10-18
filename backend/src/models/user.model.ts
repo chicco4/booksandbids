@@ -8,7 +8,9 @@ const userSchema = new mongoose.Schema({
   name: { type: String },
   surname: { type: String },
   address: { type: String },
-  temporary: { type: Boolean, default: false }
+  mod_invited_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  mod_first_login: { type: Boolean, default: false },
+  mod_temporary_password: { type: String }
 }, { timestamps: true });
 
 type User = InferSchemaType<typeof userSchema>;

@@ -47,7 +47,6 @@ interface updateUserBody {
   name?: string;
   surname?: string;
   address?: string;
-  temporary?: boolean;
 }
 
 export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBody, unknown> = async (req, res, next) => {
@@ -59,7 +58,6 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
   const newName = req.body.name;
   const newSurname = req.body.surname;
   const newAddress = req.body.address;
-  const newTemporary = req.body.temporary;
 
 
   try {
@@ -80,7 +78,6 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
     user.name = newName ? newName : user.name;
     user.surname = newSurname ? newSurname : user.surname;
     user.address = newAddress ? newAddress : user.address;
-    user.temporary = newTemporary ? newTemporary : user.temporary;
 
     const updatedUser = await user.save();
 
@@ -114,7 +111,7 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
-    const user = await userModel.findById(req.session.userId).select("+email").exec(); // i use +email to select the email field because it will not be selected by default
+    const user = await userModel.findById(req.session.userId).select("+email").exec(); // i use +email to select the email field because it should be select: false in the schema
     res.status(200).json(user);
   } catch (err) {
     next(err);
@@ -130,7 +127,6 @@ interface signUpBody {
   name?: string;
   surname?: string;
   address?: string;
-  temporary?: boolean;
 }
 
 export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = async (req, res, next) => {
@@ -141,7 +137,6 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
   const name = req.body.name;
   const surname = req.body.surname;
   const address = req.body.address;
-  const temporary = req.body.temporary;
 
   try {
     if (!username! || !email || !passwordRaw || !role) {
@@ -173,8 +168,7 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
       role: role,
       name: name,
       surname: surname,
-      address: address,
-      temporary: temporary
+      address: address
     });
 
     req.session.userId = newUser._id;
