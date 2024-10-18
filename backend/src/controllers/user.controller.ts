@@ -113,14 +113,8 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
 }
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
-  const authenticatedUserId = req.session.userId;
-
   try {
-    if (!authenticatedUserId) {
-      throw createHttpError(401, "Unauthorized");
-    }
-
-    const user = await userModel.findById(authenticatedUserId).select("+email").exec();
+    const user = await userModel.findById(req.session.userId).select("+email").exec(); // i use +email to select the email field because it will not be selected by default
     res.status(200).json(user);
   } catch (err) {
     next(err);
