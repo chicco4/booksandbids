@@ -1,1 +1,4 @@
 integrate cors library
+
+in signUp name, surname, address and temporary shouldn't be required as in the user.model
+i should't check for them and also i should put like a default value in case
