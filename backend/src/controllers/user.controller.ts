@@ -73,6 +73,10 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
     if (existingEmail) {
       throw createHttpError(409, "Email already exists");
     }
+    
+    if (role !== 'student' && role !== 'moderator') {
+      throw createHttpError(400, "Invalid role");
+    }
 
     const passwordHashed = await bcrypt.hash(passwordRaw, 10);
 
@@ -118,7 +122,7 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
   const newSurname = req.body.surname;
   const newAddress = req.body.address;
   const newTemporary = req.body.temporary;
-  
+
 
   try {
     if (!mongoose.isValidObjectId(userId)) {
