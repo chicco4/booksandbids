@@ -1,5 +1,4 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import UserModel from '../models/user.model';
 import userModel from '../models/user.model';
 import createHttpError from 'http-errors';
 import mongoose from 'mongoose';
@@ -7,7 +6,7 @@ import bcrypt from 'bcrypt';
 
 export const getUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await UserModel.find().exec();
+    const users = await userModel.find().exec();
     res.status(200).json(users);
   } catch (err) {
     next(err);
@@ -23,7 +22,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
       throw createHttpError(400, "Invalid user ID");
     }
 
-    const user = await UserModel.findById(userId).exec();
+    const user = await userModel.findById(userId).exec();
 
     if (!user) {
       throw createHttpError(404, "User not found");
