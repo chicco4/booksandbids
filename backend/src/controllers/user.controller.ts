@@ -4,110 +4,6 @@ import createHttpError from 'http-errors';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-export const getUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const users = await userModel.find().exec();
-    res.status(200).json(users);
-  } catch (err) {
-    next(err);
-  }
-};
-
-// using RequestHandler type, i don't need to specify the types of req, res, and next
-export const getUser: RequestHandler = async (req, res, next) => {
-  const userId = req.params.userId;
-
-  try {
-    if (!mongoose.isValidObjectId(userId)) {
-      throw createHttpError(400, "Invalid user ID");
-    }
-
-    const user = await userModel.findById(userId).exec();
-
-    if (!user) {
-      throw createHttpError(404, "User not found");
-    }
-
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-};
-
-interface updateUserParams {
-  userId: string;
-}
-
-interface updateUserBody {
-  username?: string;
-  email?: string;
-  password?: string;
-  role?: 'student' | 'moderator';
-  name?: string;
-  surname?: string;
-  address?: string;
-}
-
-export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBody, unknown> = async (req, res, next) => {
-  const userId = req.params.userId;
-  const newUsername = req.body.username;
-  const newEmail = req.body.email;
-  const newPasswordRaw = req.body.password;
-  // no role because we don't want it to be changeable
-  const newName = req.body.name;
-  const newSurname = req.body.surname;
-  const newAddress = req.body.address;
-
-
-  try {
-    if (!mongoose.isValidObjectId(userId)) {
-      throw createHttpError(400, "Invalid user ID");
-    }
-
-    // i could have used findByIdAndUpdate but i wanted to show how to use findById and save
-    const user = await userModel.findById(userId).exec();
-
-    if (!user) {
-      throw createHttpError(404, "User not found");
-    }
-
-    user.username = newUsername ? newUsername : user.username;
-    user.email = newEmail ? newEmail : user.email;
-    user.password = newPasswordRaw ? await bcrypt.hash(newPasswordRaw, 10) : user.password;
-    user.name = newName ? newName : user.name;
-    user.surname = newSurname ? newSurname : user.surname;
-    user.address = newAddress ? newAddress : user.address;
-
-    const updatedUser = await user.save();
-
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    next(err);
-  }
-}
-
-export const deleteUser: RequestHandler = async (req, res, next) => {
-  const userId = req.params.userId;
-
-  try {
-    if (!mongoose.isValidObjectId(userId)) {
-      throw createHttpError(400, "Invalid user ID");
-    }
-
-    const user = await userModel.findById(userId).exec();
-
-    if (!user) {
-      throw createHttpError(404, "User not found");
-    }
-
-    await user.deleteOne();
-
-    res.sendStatus(204);
-  } catch (err) {
-    next(err);
-  }
-}
-
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
     const user = await userModel.findById(req.session.userId).select("+email").exec(); // i use +email to select the email field because it should be select: false in the schema
@@ -219,4 +115,108 @@ export const logout: RequestHandler = async (req, res, next) => {
       res.sendStatus(204);
     }
   });
+}
+
+export const getUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await userModel.find().exec();
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// using RequestHandler type, i don't need to specify the types of req, res, and next
+export const getUser: RequestHandler = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    if (!mongoose.isValidObjectId(userId)) {
+      throw createHttpError(400, "Invalid user ID");
+    }
+
+    const user = await userModel.findById(userId).exec();
+
+    if (!user) {
+      throw createHttpError(404, "User not found");
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+interface updateUserParams {
+  userId: string;
+}
+
+interface updateUserBody {
+  username?: string;
+  email?: string;
+  password?: string;
+  role?: 'student' | 'moderator';
+  name?: string;
+  surname?: string;
+  address?: string;
+}
+
+export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBody, unknown> = async (req, res, next) => {
+  const userId = req.params.userId;
+  const newUsername = req.body.username;
+  const newEmail = req.body.email;
+  const newPasswordRaw = req.body.password;
+  // no role because we don't want it to be changeable
+  const newName = req.body.name;
+  const newSurname = req.body.surname;
+  const newAddress = req.body.address;
+
+
+  try {
+    if (!mongoose.isValidObjectId(userId)) {
+      throw createHttpError(400, "Invalid user ID");
+    }
+
+    // i could have used findByIdAndUpdate but i wanted to show how to use findById and save
+    const user = await userModel.findById(userId).exec();
+
+    if (!user) {
+      throw createHttpError(404, "User not found");
+    }
+
+    user.username = newUsername ? newUsername : user.username;
+    user.email = newEmail ? newEmail : user.email;
+    user.password = newPasswordRaw ? await bcrypt.hash(newPasswordRaw, 10) : user.password;
+    user.name = newName ? newName : user.name;
+    user.surname = newSurname ? newSurname : user.surname;
+    user.address = newAddress ? newAddress : user.address;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export const deleteUser: RequestHandler = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    if (!mongoose.isValidObjectId(userId)) {
+      throw createHttpError(400, "Invalid user ID");
+    }
+
+    const user = await userModel.findById(userId).exec();
+
+    if (!user) {
+      throw createHttpError(404, "User not found");
+    }
+
+    await user.deleteOne();
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
 }
