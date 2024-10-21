@@ -10,6 +10,7 @@ import MongoStore from 'connect-mongo';
 import userRoutes from './routes/user.route';
 import auctionRoutes from './routes/auction.route';
 import bidRoutes from './routes/bid.route';
+import messageRoutes from './routes/message.route';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(session({
 app.use('/api/users', userRoutes);
 app.use('/api/auctions', auctionRoutes);
 app.use('/api/bids', bidRoutes);
+app.use('/api/messages', messageRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, 'Endpoint not found'));
