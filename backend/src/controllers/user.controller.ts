@@ -18,7 +18,6 @@ interface signUpBody {
   username?: string;
   email?: string;
   password?: string;
-  role?: 'student' | 'moderator';
   name?: string;
   surname?: string;
   address?: string;
@@ -28,13 +27,12 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
   const username = req.body.username;
   const email = req.body.email;
   const passwordRaw = req.body.password;
-  const role = req.body.role;
   const name = req.body.name;
   const surname = req.body.surname;
   const address = req.body.address;
 
   try {
-    if (!username! || !email || !passwordRaw || !role) {
+    if (!username! || !email || !passwordRaw ) {
       throw createHttpError(400, "Parameters missing");
     }
 
@@ -50,17 +48,12 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
       throw createHttpError(409, "Email already exists");
     }
 
-    if (role !== 'student' && role !== 'moderator') {
-      throw createHttpError(400, "Invalid role");
-    }
-
     const passwordHashed = await bcrypt.hash(passwordRaw, 10);
 
     const newUser = await userModel.create({
       username: username,
       email: email,
       password: passwordHashed,
-      role: role,
       name: name,
       surname: surname,
       address: address
@@ -155,7 +148,6 @@ interface updateUserBody {
   username?: string;
   email?: string;
   password?: string;
-  role?: 'student' | 'moderator';
   name?: string;
   surname?: string;
   address?: string;
