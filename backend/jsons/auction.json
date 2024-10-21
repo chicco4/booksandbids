@@ -1,6 +1,6 @@
 {
-  "_id": "auctionId",
-  "seller_id": "sellerId",
+  "_id": "id",
+  "seller_id": "id",
   "book": {
     "title": "Introduction to Algorithms",
     "author": "Cormen, Leiserson, Rivest, Stein",
