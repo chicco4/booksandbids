@@ -154,15 +154,9 @@ interface updateUserBody {
 }
 
 export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBody, unknown> = async (req, res, next) => {
-  const userId = req.params.userId;
-  const newUsername = req.body.username;
-  const newEmail = req.body.email;
-  const newPasswordRaw = req.body.password;
-  // no role because we don't want it to be changeable
-  const newName = req.body.name;
-  const newSurname = req.body.surname;
-  const newAddress = req.body.address;
-
+  // i use destructuring to get the userId from the params and the other fields from the body
+  const { userId } = req.params;
+  const { username, email, password: passwordRaw, name, surname, address } = req.body;
 
   try {
     if (!mongoose.isValidObjectId(userId)) {
@@ -176,15 +170,20 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
       throw createHttpError(404, "User not found");
     }
 
-    user.username = newUsername ? newUsername : user.username;
-    user.email = newEmail ? newEmail : user.email;
-    user.password = newPasswordRaw ? await bcrypt.hash(newPasswordRaw, 10) : user.password;
-    user.name = newName ? newName : user.name;
-    user.surname = newSurname ? newSurname : user.surname;
-    user.address = newAddress ? newAddress : user.address;
+    // Update only fields that are provided
+    const updatedFields: Partial<typeof user> = {};
+    if (username) updatedFields.username = username;
+    if (email) updatedFields.email = email;
+    if (passwordRaw) updatedFields.password = await bcrypt.hash(passwordRaw, 10);
+    if (name) updatedFields.name = name;
+    if (surname) updatedFields.surname = surname;
+    if (address) updatedFields.address = address;
 
+    // Apply the updates and save the user
+    Object.assign(user, updatedFields);
     const updatedUser = await user.save();
 
+    // Respond with the updated user
     res.status(200).json(updatedUser);
   } catch (err) {
     next(err);
