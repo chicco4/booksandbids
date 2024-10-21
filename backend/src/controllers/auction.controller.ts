@@ -15,7 +15,7 @@ export const getAuctions: RequestHandler = async (req: Request, res: Response, n
 
 // using RequestHandler type, i don't need to specify the types of req, res, and next
 export const getAuction: RequestHandler = async (req, res, next) => {
-  const auctionId = req.params.userId;
+  const auctionId = req.params.auctionId;
 
   try {
     if (!mongoose.isValidObjectId(auctionId)) {
