@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', auctionController.getAuctions);
 router.get('/:auctionId', auctionController.getAuction);
 router.post('/', requiresAuth, auctionController.createAuction);
-router.delete('/', requiresAuth, auctionController.deleteAuctions);
-router.delete('/:auctionId', requiresAuth, auctionController.deleteAuction);
+router.delete('/', auctionController.deleteAuctions);
+router.delete('/:auctionId', auctionController.deleteAuction);
 
 export default router;

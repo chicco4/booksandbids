@@ -16,7 +16,7 @@ router.post('/logout', userController.logout);
 router.get('/', userController.getUsers);
 router.get('/:userId', userController.getUser);
 router.put('/:userId', userController.updateUser);
-router.delete('/', requiresAuth, userController.deleteUsers);
-router.delete('/:userId', requiresAuth, userController.deleteUser);
+router.delete('/', userController.deleteUsers);
+router.delete('/:userId', userController.deleteUser);
 
 export default router;
