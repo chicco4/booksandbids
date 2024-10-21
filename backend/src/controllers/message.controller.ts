@@ -78,6 +78,15 @@ export const createMessage: RequestHandler<unknown, unknown, createMessageBody, 
   }
 };
 
+export const deleteMessages: RequestHandler = async (req, res, next) => {
+  try {
+    await messageModel.deleteMany().exec();
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export const deleteMessage: RequestHandler = async (req, res, next) => {
   const messageId = req.params.messageId;
 

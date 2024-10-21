@@ -76,6 +76,15 @@ export const createBid: RequestHandler<unknown, unknown, createBidBody, unknown>
   }
 };
 
+export const deleteBids: RequestHandler = async (req, res, next) => {
+  try {
+    await bidModel.deleteMany().exec();
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const deleteBid: RequestHandler = async (req, res, next) => {
   const bidId = req.params.bidId;
 
@@ -96,4 +105,4 @@ export const deleteBid: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};

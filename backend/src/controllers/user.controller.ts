@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
-    const user = await userModel.findById(req.session.userId).select("+email").exec(); // i use +email to select the email field because it should be select: false in the schema
+    const user = await userModel.findById(req.session.userId).exec();
     res.status(200).json(user);
   } catch (err) {
     next(err);
@@ -81,7 +81,7 @@ export const login: RequestHandler<unknown, unknown, loginBody, unknown> = async
       throw createHttpError(400, "Parameters missing");
     }
 
-    const user = await userModel.findOne({ username: username }).select('+email +password').exec();
+    const user = await userModel.findOne({ username: username }).select('+password').exec();
 
     if (!user) {
       throw createHttpError(401, "Invalid credentials");
@@ -128,7 +128,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
       throw createHttpError(400, "Invalid user ID");
     }
 
-    const user = await userModel.findById(userId).exec();
+    const user = await userModel.findById(userId).select("+name +surname +address").exec(); // i use + to select the field because it should be select: false in the schema
 
     if (!user) {
       throw createHttpError(404, "User not found");
@@ -186,6 +186,15 @@ export const updateUser: RequestHandler<updateUserParams, unknown, updateUserBod
     const updatedUser = await user.save();
 
     res.status(200).json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export const deleteUsers: RequestHandler = async (req, res, next) => {
+  try {
+    await userModel.deleteMany().exec();
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }

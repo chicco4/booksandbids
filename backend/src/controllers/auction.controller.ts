@@ -89,6 +89,15 @@ export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, 
   }
 };
 
+export const deleteAuctions: RequestHandler = async (req, res, next) => {
+  try {
+    await auctionModel.deleteMany().exec();
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const deleteAuction: RequestHandler = async (req, res, next) => {
   const auctionId = req.params.auctionId;
 
@@ -109,4 +118,4 @@ export const deleteAuction: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
