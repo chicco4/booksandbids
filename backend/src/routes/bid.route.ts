@@ -4,7 +4,7 @@ import { requiresAuth } from '../middleware/auth';
 
 const router = express.Router();
 
-// /api/auctions
+// /api/bids
 
 router.get('/', bidController.getBids);
 router.get('/:bidId', bidController.getBid);

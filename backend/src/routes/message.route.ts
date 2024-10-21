@@ -4,7 +4,7 @@ import { requiresAuth } from '../middleware/auth';
 
 const router = express.Router();
 
-// /api/auctions
+// /api/messages
 
 router.get('/', messageController.getMessages);
 router.get('/:messageId', messageController.getMessage);
