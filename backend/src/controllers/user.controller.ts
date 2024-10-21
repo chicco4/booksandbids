@@ -36,14 +36,27 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
       throw createHttpError(400, "Parameters missing");
     }
 
-    const existingUsername = await userModel.findOne({ username: username }).exec();
+    // const existingUsername = await userModel.findOne({ username: username }).exec();
+
+    // if (existingUsername) {
+    //   throw createHttpError(409, "Username already exists");
+    // }
+
+    // const existingEmail = await userModel.findOne({ email: email }).exec();
+
+    // if (existingEmail) {
+    //   throw createHttpError(409, "Email already exists");
+    // }
+
+    // i use `Promise.all` to check if both username and email exist concurrently
+    const [existingUsername, existingEmail] = await Promise.all([
+      userModel.findOne({ username }).exec(),
+      userModel.findOne({ email }).exec(),
+    ]);
 
     if (existingUsername) {
       throw createHttpError(409, "Username already exists");
     }
-
-    const existingEmail = await userModel.findOne({ email: email }).exec();
-
     if (existingEmail) {
       throw createHttpError(409, "Email already exists");
     }
