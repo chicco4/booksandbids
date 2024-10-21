@@ -117,7 +117,7 @@ export const logout: RequestHandler = async (req, res, next) => {
   });
 }
 
-export const getUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userModel.find().exec();
     res.status(200).json(users);
