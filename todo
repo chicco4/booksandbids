@@ -1,9 +1,3 @@
 integrate cors library
 
-integrate the new jsons as models
-start by integrating user with new fields
-    no first i integrate the other models and code basic functionality
-
 add a scheduler code that closes auctions if time comes
-
-role inside user.model can become is_moderator boolean instead of enum becouse only two values
