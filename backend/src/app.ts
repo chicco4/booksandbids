@@ -3,11 +3,12 @@
 import express, { NextFunction, Request, Response } from 'express';
 import "dotenv/config";
 import morgan from 'morgan';
-import userRoutes from './routes/user.route';
 import createHttpError, { isHttpError } from 'http-errors';
 import session from 'express-session';
 import env from "./utils/validate.env";
 import MongoStore from 'connect-mongo';
+import userRoutes from './routes/user.route';
+import auctionRoutes from './routes/auction.route';
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(session({
 }));
 
 app.use('/api/users', userRoutes);
+app.use('/api/auctions', auctionRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, 'Endpoint not found'));
