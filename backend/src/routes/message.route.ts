@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/', messageController.getMessages);
 router.get('/:messageId', messageController.getMessage);
 router.post('/', requiresAuth, messageController.createMessage);
+router.delete('/', requiresAuth, messageController.deleteMessages);
 router.delete('/:messageId', requiresAuth, messageController.deleteMessage);
 
 export default router;
