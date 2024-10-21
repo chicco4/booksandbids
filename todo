@@ -1,3 +1,14 @@
 integrate cors library
 
 add a scheduler code that closes auctions if time comes
+
+remember to use destructuring, Concurrent Asynchronous Operations (Promise.all), Clean Object Creation ({ username: username } becomes { username })
+
+```
+// Use `Promise.all` to check if both username and email exist concurrently
+    const [existingUsername, existingEmail] = await Promise.all([
+      userModel.findOne({ username }).exec(),
+      userModel.findOne({ email }).exec(),
+    ]);
+
+```
