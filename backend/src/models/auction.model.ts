@@ -18,7 +18,7 @@ const auctionSchema = new mongoose.Schema({
   starting_price: { type: Number, required: true },
   reserve_price: { type: Number, required: true },
   highest_bid: { type: Number, required: true },
-  status: { type: String, required: true },
+  status: { type: String, enum: ['active', 'ended', 'deleted'], required: true },
   winner_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   winning_bid: { type: Number }
 }, { timestamps: true });

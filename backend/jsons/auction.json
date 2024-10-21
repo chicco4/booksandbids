@@ -17,7 +17,7 @@
   "starting_price": 50.00,
   "reserve_price": 60.00,
   "highest_bid": 65.00,
-  "status": "active",
+  "status": "active || ended || deleted",
   "winner_id": "winnerId",
   "winning_bid": 65.00
 }
