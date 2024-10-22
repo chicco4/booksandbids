@@ -2,6 +2,8 @@ integrate cors library
 
 add a scheduler code that closes auctions if time comes
 
+add a seed.ts
+
 remember to use destructuring, Concurrent Asynchronous Operations (Promise.all), Clean Object Creation ({ username: username } becomes { username })
 
 ```
