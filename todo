@@ -1,6 +1,6 @@
 integrate cors library
 
-add a scheduler code that closes auctions and if ok sets winner if time comes
+add a scheduler code that closes auctions and if ok sets winner if time comes, while handling notifications
 
 add a seed.ts
 
