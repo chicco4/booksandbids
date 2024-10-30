@@ -7,6 +7,7 @@ import createHttpError, { isHttpError } from 'http-errors';
 import session from 'express-session';
 import env from "./utils/validate.env";
 import MongoStore from 'connect-mongo';
+import { checkAuctions } from './jobs/auction.job'; 
 import userRoutes from './routes/user.route';
 import auctionRoutes from './routes/auction.route';
 import bidRoutes from './routes/bid.route';
@@ -34,6 +35,9 @@ app.use(session({
         mongoUrl: env.MONGO_URI
     })
 }));
+
+// Initialize the scheduler
+checkAuctions.start();
 
 app.use('/api/users', userRoutes);
 app.use('/api/auctions', auctionRoutes);
