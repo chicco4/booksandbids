@@ -63,7 +63,7 @@ export const seedDatabase = async () => {
     },
     duration: {
       start: new Date(),
-      end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minutes from now
+      end: new Date(), // now for testing
     },
     starting_price: 10,
     reserve_price: 20,
@@ -83,30 +83,58 @@ export const seedDatabase = async () => {
     },
     duration: {
       start: new Date(),
-      end: new Date(new Date().getTime() + 60 * 60 * 1000), // 60 minutes from now
+      end: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
     },
-    starting_price: 20,
-    reserve_price: 40,
+    starting_price: 10,
+    reserve_price: 20,
+    status: 'active',
+  });
+
+  const auction3 = new auctionModel({
+    seller_id: student2._id,
+    book: {
+      title: "title3",
+      author: "author3",
+      ISBN: "ISBN3",
+      course: "course3",
+      university: "university3",
+      edition: "edition3",
+      publisher: "publisher3",
+    },
+    duration: {
+      start: new Date(),
+      end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minute from now
+    },
+    starting_price: 10,
+    reserve_price: 20,
     status: 'active',
   });
 
   await auction1.save();
   await auction2.save();
+  await auction3.save();
 
   const bid1 = new bidModel({
-    auction_id: auction2._id,
+    auction_id: auction1._id,
     bidder_id: student2._id,
-    amount: 15,
+    amount: 25,
   });
 
   const bid2 = new bidModel({
-    auction_id: auction1._id,
+    auction_id: auction2._id,
+    bidder_id: student1._id,
+    amount: 25,
+  });
+
+  const bid3 = new bidModel({
+    auction_id: auction3._id,
     bidder_id: student1._id,
     amount: 25,
   });
 
   await bid1.save();
   await bid2.save();
+  await bid3.save();
 
   const message1 = new messageModel({
     sender_id: student1._id,
