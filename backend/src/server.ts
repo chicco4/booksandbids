@@ -22,7 +22,7 @@ mongoose.connect(MONGO_URI)
   .then(async () => {
     console.log('Database connected');
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`Server available at http://localhost:${PORT}/`);
     });
     // Seed the database
     await seedDatabase();
