@@ -23,3 +23,5 @@ poi fare uno scheduler che checka tutte le auction (waiting) e le attiva se sono
 make seed.ts for starting dummy data in db
 
 implement openapi documentation with swagger.io as https://www.youtube.com/watch?v=5aryMKiBEKY
+
+implement CD/CI pipeline with github actions
