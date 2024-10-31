@@ -6,9 +6,12 @@ import bids from '../models/bid.model';
 export const checkAuctions = cron.schedule('* * * * *', async () => {
   console.log('Checking auctions...');
   closeExpiredAuctionsAndSetWinner();
+  startAuctionsIfNotStarted();
 });
 
 const closeExpiredAuctionsAndSetWinner = async () => {
+  console.log('closing expired auctions and and notifing sellers and winners...');
+
   const now = new Date();
 
   // Find listings that have ended but are still active
@@ -40,4 +43,8 @@ const closeExpiredAuctionsAndSetWinner = async () => {
     await auction.save();
   }
 
+}
+
+const startAuctionsIfNotStarted = async () => {
+  console.log('starting waiting auctions...');
 }
