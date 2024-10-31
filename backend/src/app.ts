@@ -16,11 +16,11 @@ import messageRoutes from './routes/message.route';
 
 const app = express();
 
-app.use(morgan("dev"));
-
 app.get("/", (req, res) => {
     res.send("BooksAndBids!");
 });
+
+app.use(morgan("dev"));
 
 app.use(express.json());
 
