@@ -14,3 +14,8 @@ remember to use destructuring, Concurrent Asynchronous Operations (Promise.all),
     ]);
 
 ```
+
+dovrei controllare che start date e end date sono corretti da backend e in caso restituire http error alla creazione.
+poi fare in modo che se la start date e passata lo status dell'auction sia settata su active, altrimente se lo start date deve ancora arrivare da mettere in waiting, non puo essere gia in ended
+
+poi fare uno scheduler che checka tutte le auction (waiting) e le attiva se sono da attivare.
