@@ -21,3 +21,5 @@ poi fare in modo che se la start date e passata lo status dell'auction sia setta
 poi fare uno scheduler che checka tutte le auction (waiting) e le attiva se sono da attivare.
 
 make seed.ts for starting dummy data in db
+
+implement openapi documentation with swagger.io as https://www.youtube.com/watch?v=5aryMKiBEKY
