@@ -7,7 +7,7 @@ import createHttpError, { isHttpError } from 'http-errors';
 import session from 'express-session';
 import env from "./utils/validate.env";
 import MongoStore from 'connect-mongo';
-import { checkAuctions } from './jobs/auction.job'; 
+import { checkAuctions } from './jobs/check_auctions.job'; 
 import userRoutes from './routes/user.route';
 import auctionRoutes from './routes/auction.route';
 import bidRoutes from './routes/bid.route';
