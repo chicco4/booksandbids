@@ -28,13 +28,12 @@ const closeExpiredAuctionsAndSetWinner = async () => {
     if (highestBid && highestBid.amount >= auction.reserve_price) {
       // Auction successful
 
-      // Notify seller and winner (implement notification logic)
       const seller = await userModel.findById(auction.seller_id);
       const winner = await userModel.findById(highestBid.bidder_id);
 
-      // Implement sendNotification to handle notifications (email, in-app, etc.)
       if (seller && winner) {
         console.log(`Auction for ${auction.book?.title} selled by ${seller?.username} is won by ${winner?.username} at ${highestBid.amount}`);
+        
         // await sendNotification(seller.email, 'Your auction has concluded successfully!');
         // await sendNotification(winner.email, 'You have won the auction!');
         
@@ -44,7 +43,6 @@ const closeExpiredAuctionsAndSetWinner = async () => {
       }
 
     } else {
-
       // Auction failed to meet reserve price
       console.log(`Auction for ${auction.book?.title} did not meet reserve price`);
     }
