@@ -3,6 +3,7 @@
 import app from './app';
 import env from './utils/validate.env';
 import mongoose from 'mongoose';
+import { seedDatabase } from './utils/seed';
 
 const PORT = env.PORT;
 const MONGO_URI = env.MONGO_URI;
@@ -18,11 +19,13 @@ if (!MONGO_URI) {
 }
 
 mongoose.connect(MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log('Database connected');
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
+    // Seed the database
+    await seedDatabase();
   })
   .catch((error) => {
     console.error('Database connection error:', error);
