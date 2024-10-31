@@ -64,7 +64,7 @@ export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, 
     assertIsDefined(authenticatedUserId);
 
     if (!book! || !duration || !starting_price || !reserve_price) {
-      throw createHttpError(400, "Parameters misessssing");
+      throw createHttpError(400, "Parameters missing");
     }
 
     if (!book.title || !book.author || !book.ISBN || !book.course || !book.university || !book.edition || !book.publisher) {
