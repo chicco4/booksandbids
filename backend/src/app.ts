@@ -7,7 +7,8 @@ import createHttpError, { isHttpError } from 'http-errors';
 import session from 'express-session';
 import env from "./utils/validate.env";
 import MongoStore from 'connect-mongo';
-import { checkAuctions } from './jobs/check_auctions.job'; 
+import cors from 'cors';
+import { checkAuctions } from './jobs/check_auctions.job';
 import userRoutes from './routes/user.route';
 import auctionRoutes from './routes/auction.route';
 import bidRoutes from './routes/bid.route';
@@ -35,6 +36,8 @@ app.use(session({
         mongoUrl: env.MONGO_URI
     })
 }));
+
+app.use(cors());
 
 // Initialize the scheduler
 checkAuctions.start();
