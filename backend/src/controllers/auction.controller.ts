@@ -75,12 +75,21 @@ export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, 
       throw createHttpError(400, "Duration parameters missing");
     }
 
+    if (duration.start >= duration.end) {
+      throw createHttpError(400, "Invalid duration");
+    }
+
+    if (starting_price < 0 || reserve_price < 0) {
+      throw createHttpError(400, "Prices must be positive");
+    }
+
     const newAuction = await auctionModel.create({
       seller_id: authenticatedUserId,
       book: book,
       duration: duration,
       starting_price: starting_price,
-      reserve_price: reserve_price
+      reserve_price: reserve_price,
+      status: 'active', // for now we set the status to active for every new auction
     });
 
     res.status(201).json(newAuction);
