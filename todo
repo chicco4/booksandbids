@@ -25,3 +25,8 @@ make seed.ts for starting dummy data in db
 implement openapi documentation with swagger.io as https://www.youtube.com/watch?v=5aryMKiBEKY
 
 implement CD/CI pipeline with github actions
+
+we shold create a services folder to separate xpress or any HTTP-specific elements and data and logic.
+1. Controller receives a request -> validates input -> calls a Service function.
+2. Service processes data or fetches data from a Model (database).
+3. Controller receives data from the Service and sends an appropriate HTTP response.
