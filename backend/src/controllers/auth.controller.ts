@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import userModel from '../models/user.model';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
+import { assertIsDefined } from '../utils/assert.is.defined';
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
@@ -143,8 +144,11 @@ interface inviteModeratorBody {
 
 export const inviteModerator: RequestHandler<unknown, unknown, inviteModeratorBody, unknown> = async (req, res, next) => {
   const { username, email, password: passwordRaw } = req.body;
+  const authenticatedUserId = req.session.user_id;
 
   try {
+    assertIsDefined(authenticatedUserId);
+    
     if (!username! || !email || !passwordRaw) {
       throw createHttpError(400, "Parameters missing");
     }
@@ -163,6 +167,7 @@ export const inviteModerator: RequestHandler<unknown, unknown, inviteModeratorBo
       password: passwordHashed,
       is_moderator: true,
       is_first_login: true,
+      invited_by: authenticatedUserId
     });
 
     res.status(201).json(newMod);
