@@ -54,7 +54,7 @@ interface createAuctionBody {
 }
 
 export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, unknown> = async (req, res, next) => {
-  const authenticatedUserId = req.session.userId;
+  const authenticatedUserId = req.session.user_id;
   const book = req.body.book;
   const duration = req.body.duration;
   const starting_price = req.body.starting_price;

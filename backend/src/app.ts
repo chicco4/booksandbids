@@ -9,10 +9,11 @@ import env from "./utils/validate.env";
 import MongoStore from 'connect-mongo';
 import cors from 'cors';
 import { checkAuctions } from './jobs/check_auctions.job';
-import userRoutes from './routes/user.route';
-import auctionRoutes from './routes/auction.route';
-import bidRoutes from './routes/bid.route';
-import messageRoutes from './routes/message.route';
+import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import auctionRoutes from './routes/auction.routes';
+import bidRoutes from './routes/bid.routes';
+import messageRoutes from './routes/message.routes';
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(cors());
 // Initialize the scheduler
 checkAuctions.start();
 
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/auctions', auctionRoutes);
 app.use('/api/bids', bidRoutes);

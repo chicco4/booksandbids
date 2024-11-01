@@ -45,7 +45,7 @@ export const createBid: RequestHandler<unknown, unknown, createBidBody, unknown>
   const auction_id = req.body.auction_id;
   const amount = req.body.amount;
   
-  const authenticatedUserId = req.session.userId;
+  const authenticatedUserId = req.session.user_id;
 
   try {
     assertIsDefined(authenticatedUserId);

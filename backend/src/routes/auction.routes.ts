@@ -1,6 +1,6 @@
 import express from 'express';
 import * as auctionController from '../controllers/auction.controller';
-import { requiresAuth } from '../middleware/auth';
+import { requiresAuth } from '../middleware/auth.middleware';
 
 const router = express.Router();
 

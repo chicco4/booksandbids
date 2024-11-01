@@ -43,7 +43,7 @@ interface createMessageBody {
 }
 
 export const createMessage: RequestHandler<unknown, unknown, createMessageBody, unknown> = async (req, res, next) => {
-  const authenticatedUserId = req.session.userId;
+  const authenticatedUserId = req.session.user_id;
   const auction_id = req.body.auction_id;
   const content = req.body.content;
   const is_public = req.body.is_public;
