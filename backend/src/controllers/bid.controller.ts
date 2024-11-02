@@ -37,36 +37,36 @@ export const getBid: RequestHandler = async (req, res, next) => {
 
 // they are optional becouse we can't be sure that the client will send the body with all parameters correctly
 interface createBidBody {
-  auction_id?: string,
+  auctionId?: string,
   amount?: number
 }
 
 export const createBid: RequestHandler<unknown, unknown, createBidBody, unknown> = async (req, res, next) => {
-  const auction_id = req.body.auction_id;
+  const auctionId = req.body.auctionId;
   const amount = req.body.amount;
   
-  const authenticatedUserId = req.session.user_id;
+  const authenticatedUserId = req.session.userId;
 
   try {
     assertIsDefined(authenticatedUserId);
 
-    if (!auction_id || !amount) {
+    if (!auctionId || !amount) {
       throw createHttpError(400, "Parameters missing");
     }
 
-    if (!mongoose.isValidObjectId(auction_id)) {
+    if (!mongoose.isValidObjectId(auctionId)) {
       throw createHttpError(400, "Invalid auction ID");
     }
 
-    const existingAuction = await auctionModel.findById(auction_id).exec();
+    const existingAuction = await auctionModel.findById(auctionId).exec();
 
     if (!existingAuction) {
       throw createHttpError(400, "Auction does not exist");
     }    
 
     const newBid = await bidModel.create({
-      auction_id: auction_id,
-      bidder_id: authenticatedUserId,
+      auctionId: auctionId,
+      bidderId: authenticatedUserId,
       amount: amount
     });
 

@@ -1,7 +1,7 @@
 import mongoose, { InferSchemaType } from 'mongoose';
 
 const auctionSchema = new mongoose.Schema({
-  seller_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   book: {
     title: { type: String, required: true },
     author: { type: String, required: true },
@@ -15,12 +15,12 @@ const auctionSchema = new mongoose.Schema({
     start: { type: Date, required: true },
     end: { type: Date, required: true },
   },
-  starting_price: { type: Number, required: true },
-  reserve_price: { type: Number, required: true },
-  highest_bid: { type: Number },
+  startingPrice: { type: Number, required: true },
+  reservePrice: { type: Number, required: true },
+  highestBid: { type: Number },
   status: { type: String, enum: ['waiting', 'active', 'ended', 'deleted'] },
-  winner_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  winning_bid: { type: Number }
+  winnerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  winningBid: { type: Number }
 }, { timestamps: true });
 
 type Auction = InferSchemaType<typeof auctionSchema>;

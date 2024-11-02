@@ -21,15 +21,15 @@ const closeExpiredAuctionsAndSetWinner = async () => {
 
   for (const auction of expiredAuctions) {
     // Get the highest bid
-    const highestBid = await bidModel.findOne({ auction_id: auction._id })
+    const highestBid = await bidModel.findOne({ auctionId: auction._id })
       .sort('-amount')
       .limit(1);
 
-    if (highestBid && highestBid.amount >= auction.reserve_price) {
+    if (highestBid && highestBid.amount >= auction.reservePrice) {
       // Auction successful
 
-      const seller = await userModel.findById(auction.seller_id);
-      const winner = await userModel.findById(highestBid.bidder_id);
+      const seller = await userModel.findById(auction.sellerId);
+      const winner = await userModel.findById(highestBid.bidderId);
 
       if (seller && winner) {
         console.log(`Auction for ${auction.book?.title} selled by ${seller?.username} is won by ${winner?.username} at ${highestBid.amount}`);
@@ -38,8 +38,8 @@ const closeExpiredAuctionsAndSetWinner = async () => {
         // await sendNotification(winner.email, 'You have won the auction!');
         
         // setting the winner in the auction
-        auction.winner_id = winner._id;
-        auction.winning_bid = highestBid.amount;
+        auction.winnerId = winner._id;
+        auction.winningBid = highestBid.amount;
       }
 
     } else {

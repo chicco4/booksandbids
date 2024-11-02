@@ -6,7 +6,7 @@ export function assertIsDefined<T>(value: T): asserts value is NonNullable<T> {
 
 // use it after 7:08:00
 /**
- * consr authenticatedUserId = req.session.userId;
+ * const authenticatedUserId = req.session.userId;
  * try {
  *  assertIsDefined(authenticatedUserId);
  * }

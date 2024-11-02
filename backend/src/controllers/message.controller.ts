@@ -37,25 +37,25 @@ export const getMessage: RequestHandler = async (req, res, next) => {
 
 // they are optional because we can't be sure that the client will send the body with all parameters correctly
 interface createMessageBody {
-  auction_id?: string,
+  auctionId?: string,
   content?: string,
-  is_public?: boolean
+  isPublic?: boolean
 }
 
 export const createMessage: RequestHandler<unknown, unknown, createMessageBody, unknown> = async (req, res, next) => {
-  const authenticatedUserId = req.session.user_id;
-  const auction_id = req.body.auction_id;
+  const authenticatedUserId = req.session.userId;
+  const auctionId = req.body.auctionId;
   const content = req.body.content;
-  const is_public = req.body.is_public;
+  const isPublic = req.body.isPublic;
 
   try {
     assertIsDefined(authenticatedUserId);
 
-    if (!mongoose.isValidObjectId(auction_id)) {
+    if (!mongoose.isValidObjectId(auctionId)) {
       throw createHttpError(400, "Invalid auction ID");
     }
 
-    const existingAuction = await auctionModel.findById(auction_id).exec();
+    const existingAuction = await auctionModel.findById(auctionId).exec();
 
     if (!existingAuction) {
       throw createHttpError(400, "Auction does not exist");
@@ -66,10 +66,10 @@ export const createMessage: RequestHandler<unknown, unknown, createMessageBody, 
     }
 
     const newMessage = await messageModel.create({
-      sender_id: authenticatedUserId,
-      auction_id: auction_id,
+      senderId: authenticatedUserId,
+      auctionId: auctionId,
       content: content,
-      is_public: is_public,
+      isPublic: isPublic,
     });
 
     res.status(201).json(newMessage);

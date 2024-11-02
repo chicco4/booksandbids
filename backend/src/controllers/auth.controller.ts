@@ -6,7 +6,7 @@ import { assertIsDefined } from '../utils/assert.is.defined';
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
-    const user = await userModel.findById(req.session.user_id).exec();
+    const user = await userModel.findById(req.session.userId).exec();
     res.status(200).json(user);
   } catch (err) {
     next(err);
@@ -72,7 +72,7 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
       address: address
     });
 
-    req.session.user_id = newUser._id;
+    req.session.userId = newUser._id;
 
     res.status(201).json(newUser);
   } catch (err) {
@@ -83,13 +83,13 @@ export const signUp: RequestHandler<unknown, unknown, signUpBody, unknown> = asy
 interface loginBody {
   username?: string;
   password?: string;
-  new_password?: string;
+  newPassword?: string;
 }
 
 export const login: RequestHandler<unknown, unknown, loginBody, unknown> = async (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  const new_password = req.body.new_password;
+  const newPasswordRaw = req.body.newPassword;
 
   try {
     if (!username || !password) {
@@ -108,18 +108,20 @@ export const login: RequestHandler<unknown, unknown, loginBody, unknown> = async
       throw createHttpError(401, "Invalid credentials");
     }
 
-    if (user.is_moderator && user.is_first_login == true) {
-      if (!new_password) {
+    if (user.isModerator && user.isFirstLogin == true) {
+      if (!newPasswordRaw) {
         throw createHttpError(401, "Parameters missing");
       }
 
-      user.password = new_password;
-      user.is_first_login = false
+      const newPasswordHashed = await bcrypt.hash(newPasswordRaw, 10);
+
+      user.password = newPasswordHashed;
+      user.isFirstLogin = false
       user.save();
     }
 
-    req.session.user_id = user._id;
-    req.session.user_is_moderator = user.is_moderator;
+    req.session.userId = user._id;
+    req.session.userIsModerator = user.isModerator;
     res.status(201).json(user);
   } catch (err) {
     next(err);
@@ -144,7 +146,7 @@ interface inviteModeratorBody {
 
 export const inviteModerator: RequestHandler<unknown, unknown, inviteModeratorBody, unknown> = async (req, res, next) => {
   const { username, email, password: passwordRaw } = req.body;
-  const authenticatedUserId = req.session.user_id;
+  const authenticatedUserId = req.session.userId;
 
   try {
     assertIsDefined(authenticatedUserId);
@@ -165,9 +167,9 @@ export const inviteModerator: RequestHandler<unknown, unknown, inviteModeratorBo
       username: username,
       email: email,
       password: passwordHashed,
-      is_moderator: true,
-      is_first_login: true,
-      invited_by: authenticatedUserId
+      isModerator: true,
+      isFirstLogin: true,
+      invitedBy: authenticatedUserId
     });
 
     res.status(201).json(newMod);
