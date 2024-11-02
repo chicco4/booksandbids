@@ -1,6 +1,6 @@
 {
   "_id": "id",
-  "seller_id": "id",
+  "sellerId": "id",
   "book": {
     "title": "Introduction to Algorithms",
     "author": "Cormen, Leiserson, Rivest, Stein",
@@ -14,10 +14,10 @@
     "start": "2023-10-01T00:00:00Z",
     "end": "2023-10-07T00:00:00Z"
   },
-  "starting_price": 50.00,
-  "reserve_price": 60.00,
-  "highest_bid": 65.00,
+  "startingPrice": 50.00,
+  "reservePrice": 60.00,
+  "highestBid": 65.00,
   "status": "active || ended || deleted",
-  "winner_id": "winnerId",
-  "winning_bid": 65.00
+  "winnerId": "winnerId",
+  "winningBid": 65.00
 }

@@ -6,8 +6,7 @@
   "name": "name1",
   "surname": "surname1",
   "address": "address1",
-  "is_moderator": false,
-  "is_first_login": false,
-  "invited_by": "moderatorId",
-  "temporary_password": "temporaryPassword"
+  "isModerator": false,
+  "isFirstLogin": false,
+  "invitedBy": "moderatorId"
 }

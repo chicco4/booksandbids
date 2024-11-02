@@ -1,7 +1,7 @@
 {
   "_id": "id",
-  "sender_id": "id",
-  "auction_id": "id",
+  "senderId": "id",
+  "auctionId": "id",
   "content": "message1",
-  "is_public": false
+  "isPublic": false
 }
