@@ -15,6 +15,11 @@ remember to use destructuring, Concurrent Asynchronous Operations (Promise.all),
 
 ```
 
+elimina inutili routes che rendono il progetto inutilmente complesso e concentrati nel imlpementare bene le funzionalita richieste dal prof:
+- tipo elimina le deleteAll che sono inutili
+- rendi piu personali con authenticatedUserId le creazioni delle cose e gli update
+- aggiungi getBidsByAuctionId
+
 dovrei controllare che start date e end date sono corretti da backend e in caso restituire http error alla creazione.
 poi fare in modo che se la start date e passata lo status dell'auction sia settata su active, altrimente se lo start date deve ancora arrivare da mettere in waiting, non puo essere gia in ended
 
