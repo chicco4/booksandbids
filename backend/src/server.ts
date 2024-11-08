@@ -21,11 +21,12 @@ if (!MONGO_URI) {
 mongoose.connect(MONGO_URI)
   .then(async () => {
     console.log('Database connected');
+    // Seed the database
+    await seedDatabase();
+    
     app.listen(PORT, () => {
       console.log(`Server available at http://localhost:${PORT}/`);
     });
-    // Seed the database
-    await seedDatabase();
   })
   .catch((error) => {
     console.error('Database connection error:', error);
