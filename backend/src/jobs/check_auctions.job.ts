@@ -3,7 +3,6 @@ import auctionModel from '../models/auction.model';
 import userModel from '../models/user.model';
 
 export const checkAuctions = cron.schedule('* * * * *', async () => {
-  console.log('Checking auctions...');
   startWaitingAuctions();
   closeExpiredAuctionsAndSetWinner();
 });
