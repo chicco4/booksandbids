@@ -9,8 +9,6 @@ export const checkAuctions = cron.schedule('* * * * *', async () => {
 });
 
 const startWaitingAuctions = async () => {
-  console.log('starting waiting auctions...');
-
   const now = new Date();
 
   // Find listings that have ended but are still active
@@ -28,8 +26,6 @@ const startWaitingAuctions = async () => {
 };
 
 const closeExpiredAuctionsAndSetWinner = async () => {
-  console.log('closing expired auctions...');
-
   const now = new Date();
 
   // Find listings that have ended but are still active
