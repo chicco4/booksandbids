@@ -4,6 +4,16 @@ add a scheduler code that closes auctions and if ok sets winner if time comes, w
 
 add a seed.ts
 
+Traslations using angular i18n
+
+Aggiungere status succeded e failed on auction model
+
+Togliere winnerbid che tanto lo trovo
+
+Moderator chiamarlo admin
+
+Immagini in base64 come stringa sul db 255 length
+
 remember to use destructuring, Concurrent Asynchronous Operations (Promise.all), Clean Object Creation ({ username: username } becomes { username })
 
 ```
