@@ -12,8 +12,6 @@ import { checkAuctions } from './jobs/check_auctions.job';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import auctionRoutes from './routes/auction.routes';
-import bidRoutes from './routes/bid.routes';
-import messageRoutes from './routes/message.routes';
 
 const app = express();
 
@@ -46,8 +44,6 @@ checkAuctions.start();
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/auctions', auctionRoutes);
-app.use('/api/bids', bidRoutes);
-app.use('/api/messages', messageRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, 'Endpoint not found'));

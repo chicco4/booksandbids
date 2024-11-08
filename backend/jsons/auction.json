@@ -14,10 +14,33 @@
     "start": "2023-10-01T00:00:00Z",
     "end": "2023-10-07T00:00:00Z"
   },
+  "bids": [
+    {
+      "bidderId": "id",
+      "amount": 65.00,
+      "createdAt": "2023-10-01T00:00:00Z"
+    },
+    {
+      "bidderId": "id",
+      "amount": 60.00,
+      "createdAt": "2023-10-01T00:00:00Z"
+    }
+  ],
+  "messages": [
+    {
+      "senderId": "id",
+      "content": "message1",
+      "isPrivate": false,
+      "createdAt": "2023-10-01T00:00:00Z"
+    },
+    {
+      "senderId": "id",
+      "content": "message2",
+      "isPrivate": false,
+      "createdAt": "2023-10-01T00:00:00Z"
+    }
+  ],
   "startingPrice": 50.00,
   "reservePrice": 60.00,
-  "highestBid": 65.00,
-  "status": "active || ended || deleted",
-  "winnerId": "winnerId",
-  "winningBid": 65.00
+  "status": "waiting || active || succeded || failed || deleted"
 }

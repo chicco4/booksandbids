@@ -1,20 +1,18 @@
 import userModel from "../models/user.model";
 import auctionModel from "../models/auction.model";
-import bidModel from "../models/bid.model";
-import messageModel from "../models/message.model";
 import bcrypt from "bcrypt";
 
 export const seedDatabase = async () => {
   // Check if data already exists
-  const userCount = await userModel.countDocuments();
-  if (userCount > 0) {
-    console.log('Database already seeded');
-    return;
-  }
+  // const userCount = await userModel.countDocuments();
+  // if (userCount > 0) {
+  //   console.log('Database already seeded');
+  //   return;
+  // }
+
   // Clear all residual data
+  await userModel.deleteMany().exec();
   await auctionModel.deleteMany().exec();
-  await bidModel.deleteMany().exec();
-  await messageModel.deleteMany().exec();
 
   const hashedPassword = await bcrypt.hash('password', 10);
 
@@ -65,9 +63,25 @@ export const seedDatabase = async () => {
       start: new Date(),
       end: new Date(), // now for testing
     },
+    bids: [{
+      bidderId: student2._id,
+      amount: 25,
+      createdAt: new Date(),
+    }],
+    messages: [{
+      senderId: student2._id,
+      content: "message from student2",
+      isPrivate: false,
+      createdAt: new Date(),
+    },
+    {
+      senderId: student1._id,
+      content: "response from student1",
+      isPrivate: false,
+      createdAt: new Date(),
+    }],
     startingPrice: 10,
-    reservePrice: 20,
-    status: 'active',
+    reservePrice: 20
   });
 
   const auction2 = new auctionModel({
@@ -85,9 +99,25 @@ export const seedDatabase = async () => {
       start: new Date(),
       end: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
     },
+    bids: [{
+      bidderId: student1._id,
+      amount: 25,
+      createdAt: new Date(),
+    }],
+    messages: [{
+      senderId: student1._id,
+      content: "message from student1",
+      isPrivate: true,
+      createdAt: new Date(),
+    },
+    {
+      senderId: student2._id,
+      content: "response from student2",
+      isPrivate: true,
+      createdAt: new Date(),
+    }],
     startingPrice: 10,
-    reservePrice: 20,
-    status: 'active',
+    reservePrice: 20
   });
 
   const auction3 = new auctionModel({
@@ -102,57 +132,16 @@ export const seedDatabase = async () => {
       publisher: "publisher3",
     },
     duration: {
-      start: new Date(),
+      start: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
       end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minute from now
     },
     startingPrice: 10,
-    reservePrice: 20,
-    status: 'active',
+    reservePrice: 20
   });
 
   await auction1.save();
   await auction2.save();
   await auction3.save();
-
-  const bid1 = new bidModel({
-    auctionId: auction1._id,
-    bidderId: student2._id,
-    amount: 25,
-  });
-
-  const bid2 = new bidModel({
-    auctionId: auction2._id,
-    bidderId: student1._id,
-    amount: 25,
-  });
-
-  const bid3 = new bidModel({
-    auctionId: auction3._id,
-    bidderId: student1._id,
-    amount: 25,
-  });
-
-  await bid1.save();
-  await bid2.save();
-  await bid3.save();
-
-  const message1 = new messageModel({
-    senderId: student1._id,
-    auctionId: auction1._id,
-    content: 'Message 1 from student 1 in auction 1', 
-    isPublic: true,
-  });
-
-  const message2 = new messageModel({
-    senderId: student2._id,
-    auctionId: auction1._id,
-    content: 'Message 2 from student 2 in auction 1',
-    isPublic: true,
-  });
-
-  await message1.save();
-  await message2.save();
-
 
   console.log('Database seeded successfully');
 };

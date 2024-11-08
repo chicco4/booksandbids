@@ -2,7 +2,6 @@ import { RequestHandler } from 'express';
 import userModel from '../models/user.model';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
-import { assertIsDefined } from '../utils/assert.is.defined';
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
@@ -136,44 +135,4 @@ export const logout: RequestHandler = async (req, res, next) => {
       res.sendStatus(204);
     }
   });
-}
-
-interface inviteModeratorBody {
-  username?: string;
-  email?: string;
-  password?: string;
-}
-
-export const inviteModerator: RequestHandler<unknown, unknown, inviteModeratorBody, unknown> = async (req, res, next) => {
-  const { username, email, password: passwordRaw } = req.body;
-  const authenticatedUserId = req.session.userId;
-
-  try {
-    assertIsDefined(authenticatedUserId);
-    
-    if (!username! || !email || !passwordRaw) {
-      throw createHttpError(400, "Parameters missing");
-    }
-
-    const existingUsername = await userModel.findOne({ username: username }).exec();
-
-    if (existingUsername) {
-      throw createHttpError(409, "Username already exists");
-    }
-
-    const passwordHashed = await bcrypt.hash(passwordRaw, 10);
-
-    const newMod = await userModel.create({
-      username: username,
-      email: email,
-      password: passwordHashed,
-      isModerator: true,
-      isFirstLogin: true,
-      invitedBy: authenticatedUserId
-    });
-
-    res.status(201).json(newMod);
-  } catch (err) {
-    next(err)
-  }
 }
