@@ -65,6 +65,7 @@ const startWaitingAuctions = async () => {
 
   // Set the status of the auctions to active
   for (const auction of waitingAuctions) {
+    console.log(`Auction for ${auction.book?.title} is now active`);
     auction.status = 'active';
     await auction.save();
   }
