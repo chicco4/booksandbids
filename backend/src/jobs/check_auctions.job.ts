@@ -4,9 +4,28 @@ import userModel from '../models/user.model';
 
 export const checkAuctions = cron.schedule('* * * * *', async () => {
   console.log('Checking auctions...');
-  closeExpiredAuctionsAndSetWinner();
   startWaitingAuctions();
+  closeExpiredAuctionsAndSetWinner();
 });
+
+const startWaitingAuctions = async () => {
+  console.log('starting waiting auctions...');
+
+  const now = new Date();
+
+  // Find listings that have ended but are still active
+  const waitingAuctions = await auctionModel.find({
+    'duration.start': { $lte: now },
+    status: "waiting",
+  });
+
+  // Set the status of the auctions to active
+  for (const auction of waitingAuctions) {
+    console.log(`Auction for ${auction.book?.title} is now active`);
+    auction.status = 'active';
+    await auction.save();
+  }
+};
 
 const closeExpiredAuctionsAndSetWinner = async () => {
   console.log('closing expired auctions...');
@@ -50,23 +69,4 @@ const closeExpiredAuctionsAndSetWinner = async () => {
 
     await auction.save();
   }
-}
-
-const startWaitingAuctions = async () => {
-  console.log('starting waiting auctions...');
-
-  const now = new Date();
-
-  // Find listings that have ended but are still active
-  const waitingAuctions = await auctionModel.find({
-    'duration.start': { $lte: now },
-    status: "waiting",
-  });
-
-  // Set the status of the auctions to active
-  for (const auction of waitingAuctions) {
-    console.log(`Auction for ${auction.book?.title} is now active`);
-    auction.status = 'active';
-    await auction.save();
-  }
-}
+};
