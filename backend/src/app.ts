@@ -15,20 +15,13 @@ import auctionRoutes from './routes/auction.routes';
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("BooksAndBids!");
-});
-
-app.use(morgan("dev"));
-
-app.use(express.json());
-
 app.use(session({
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60 * 60 * 1000 // 1 hour
+        maxAge: 60 * 60 * 1000, // 1 hour,
+        secure: false,
     },
     rolling: true, // cookie expiration time resets on every request
     store: MongoStore.create({
@@ -36,10 +29,22 @@ app.use(session({
     })
 }));
 
-app.use(cors());
+app.use(morgan("dev"));
+
+app.use(express.json());
+
+app.use(cors({
+    credentials: true
+}));
 
 // Initialize the scheduler
 checkAuctions.start();
+
+app.use((req, res, next) => {
+    console.log('Session ID:', req.sessionID);
+    console.log('Session:', req.session);
+    next();
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
