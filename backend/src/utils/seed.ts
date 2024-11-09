@@ -3,14 +3,15 @@ import auctionModel from "../models/auction.model";
 import bcrypt from "bcrypt";
 
 export const seedDatabase = async () => {
-  // Check if data already exists
-  const userCount = await userModel.countDocuments();
-  if (userCount > 0) {
-    console.log('Database already seeded');
-    return;
-  }
+  // // Check if data already exists
+  // const userCount = await userModel.countDocuments();
+  // if (userCount > 0) {
+  //   console.log('Database already seeded');
+  //   return;
+  // }
 
   // Clear all residual data
+  await userModel.deleteMany().exec();
   await auctionModel.deleteMany().exec();
 
   const hashedPassword = await bcrypt.hash('password', 10);
