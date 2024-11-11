@@ -109,7 +109,7 @@ export const login: RequestHandler<unknown, unknown, loginBody, unknown> = async
 
     if (user.isModerator && user.isFirstLogin == true) {
       if (!newPasswordRaw) {
-        throw createHttpError(401, "Parameters missing");
+        throw createHttpError(401, "newPassword missing");
       }
 
       const newPasswordHashed = await bcrypt.hash(newPasswordRaw, 10);
