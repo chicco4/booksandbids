@@ -4,7 +4,7 @@ import auctionModel from "../models/auction.model";
 import bcrypt from "bcrypt";
 
 export const seedDatabase = async () => {
-  
+
   // // Check if data already exists
   // const userCount = await userModel.countDocuments();
   // if (userCount > 0) {
@@ -69,11 +69,18 @@ export const seedDatabase = async () => {
       start: new Date(),
       end: new Date(), // now for testing
     },
-    bids: [{
-      bidderId: student2._id,
-      amount: 25,
-      createdAt: new Date(),
-    }],
+    bids: [
+      {
+        bidderId: student2._id,
+        amount: 25,
+        createdAt: new Date(),
+      },
+      {
+        bidderId: student2._id,
+        amount: 30,
+        createdAt: new Date(),
+      }
+    ],
     messages: [{
       senderId: student2._id,
       content: "message from student2",

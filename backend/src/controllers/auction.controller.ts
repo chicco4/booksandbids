@@ -293,7 +293,7 @@ export const getAuctionBids: RequestHandler = async (req, res, next) => {
       throw createHttpError(400, "Invalid auction ID");
     }
 
-    const auction = await auctionModel.findById(auctionId).exec();
+    const auction = await auctionModel.findById(auctionId).select("+bids").exec();
 
     if (!auction) {
       throw createHttpError(404, "Auction not found");
@@ -379,7 +379,7 @@ export const getAuctionMessages: RequestHandler = async (req, res, next) => {
       throw createHttpError(400, "Invalid auction ID");
     }
 
-    const auction = await auctionModel.findById(auctionId).exec();
+    const auction = await auctionModel.findById(auctionId).select("+messages").exec();
 
     if (!auction) {
       throw createHttpError(404, "Auction not found");
