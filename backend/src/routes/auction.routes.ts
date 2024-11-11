@@ -7,8 +7,8 @@ const router = express.Router();
 // /api/auctions
 
 router.get('/', auctionController.searchAuctions);
-router.get('/:auctionId', auctionController.getAuctionById);
 router.get('/logged', requiresStud, auctionController.getAuthenticatedUserAuctions);
+router.get('/:auctionId', auctionController.getAuctionById);
 
 router.put<{ auctionId: string }>('/:auctionId', requiresMod, auctionController.updateAuctionById);
 router.post('/', requiresStud, auctionController.createAuction);
