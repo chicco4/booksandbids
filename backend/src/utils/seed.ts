@@ -1,8 +1,10 @@
+import mongoose from "mongoose"; // Import mongoose for ObjectId
 import userModel from "../models/user.model";
 import auctionModel from "../models/auction.model";
 import bcrypt from "bcrypt";
 
 export const seedDatabase = async () => {
+  
   // // Check if data already exists
   // const userCount = await userModel.countDocuments();
   // if (userCount > 0) {
@@ -16,8 +18,9 @@ export const seedDatabase = async () => {
 
   const hashedPassword = await bcrypt.hash('password', 10);
 
-  // Create default moderator
+  // Create default moderator with a fixed _id
   const moderator = new userModel({
+    _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d2c'), // Manually set _id
     username: 'moderator1',
     email: 'moderator1@example.com',
     password: hashedPassword,
@@ -25,8 +28,9 @@ export const seedDatabase = async () => {
     isFirstLogin: false,
   });
 
-  // Create default students
+  // Create default students with fixed _id
   const student1 = new userModel({
+    _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d2d'),
     username: 'student1',
     email: 'student1@example.com',
     password: hashedPassword,
@@ -36,6 +40,7 @@ export const seedDatabase = async () => {
   });
 
   const student2 = new userModel({
+    _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d2e'),
     username: 'student2',
     email: 'student2@example.com',
     password: hashedPassword,
@@ -49,6 +54,7 @@ export const seedDatabase = async () => {
   await student2.save();
 
   const auction1 = new auctionModel({
+    _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d2f'),
     sellerId: student1._id,
     book: {
       title: "title1",
@@ -85,6 +91,7 @@ export const seedDatabase = async () => {
   });
 
   const auction2 = new auctionModel({
+    _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d30'),
     sellerId: student2._id,
     book: {
       title: "title2",
@@ -121,6 +128,7 @@ export const seedDatabase = async () => {
   });
 
   const auction3 = new auctionModel({
+    _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d31'),
     sellerId: student2._id,
     book: {
       title: "title3",
