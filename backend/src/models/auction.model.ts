@@ -15,25 +15,33 @@ const auctionSchema = new mongoose.Schema({
     start: { type: Date, required: true },
     end: { type: Date, required: true }
   },
-  bids: [{
-    bidderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    amount: { type: Number, required: true },
-    createdAt: { type: Date, required: true },
-  }],
-  messages: [{
-    senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    content: { type: String, required: true },
-    isPrivate: { type: Boolean, default: false },
-    createdAt: { type: Date, required: true },
-  }],
+  bids: {
+    type: [
+      {
+        bidderId: { type: mongoose.Schema.Types.ObjectId, required: true },
+        amount: { type: Number, required: true },
+        createdAt: { type: Date, required: true },
+      },
+    ],
+    default: [], // Ensure default is an empty array
+    select: false, // Exclude bids by default
+  },
+  messages: {
+    type: [
+      {
+        senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        content: { type: String, required: true },
+        isPrivate: { type: Boolean, default: false },
+        createdAt: { type: Date, required: true },
+      },
+    ],
+    default: [], // Ensure default is an empty array
+    select: false, // Exclude messages by default
+  },
   startingPrice: { type: Number, required: true },
   reservePrice: { type: Number, required: true },
   status: { type: String, enum: ['waiting', 'active', 'succeded', `failed`, 'deleted'], default: 'waiting' },
 }, { timestamps: true });
-
-// excluding bids and messages by default
-auctionSchema.path('bids').select(false);
-auctionSchema.path('messages').select(false);
 
 type Auction = InferSchemaType<typeof auctionSchema>;
 

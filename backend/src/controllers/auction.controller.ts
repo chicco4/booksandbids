@@ -330,7 +330,7 @@ export const bidAuction: RequestHandler<bidAuctionParams, unknown, bidAuctionBod
       throw createHttpError(400, "Amount missing");
     }
 
-    const auction = await auctionModel.findById(auctionId).exec();
+    const auction = await auctionModel.findById(auctionId).select('+bids').exec();
 
     if (!auction) {
       throw createHttpError(404, "Auction not found");
@@ -348,12 +348,18 @@ export const bidAuction: RequestHandler<bidAuctionParams, unknown, bidAuctionBod
       throw createHttpError(400, "Amount must be positive");
     }
 
-    if (auction.bids.length === 0 && amount < auction.startingPrice) {
+    // Handle bids safely
+    const lastBidAmount =
+      auction.bids && auction.bids.length > 0
+        ? auction.bids[auction.bids.length - 1].amount
+        : auction.startingPrice;
+
+    if (auction.bids?.length === 0 && amount < auction.startingPrice) {
       throw createHttpError(400, "Amount is less than the starting price");
     }
 
-    if (amount < auction.bids[auction.bids.length - 1].amount) {
-      throw createHttpError(400, "Amount is less than the last bid");
+    if (amount <= lastBidAmount) {
+      throw createHttpError(400, "Amount must be higher than the current bid");
     }
 
     auction.bids.push({
@@ -416,7 +422,7 @@ export const messageAuction: RequestHandler<messageAuctionParams, unknown, messa
       throw createHttpError(400, "Parameters missing");
     }
 
-    const auction = await auctionModel.findById(auctionId).exec();
+    const auction = await auctionModel.findById(auctionId).select('+messages').exec();
 
     if (!auction) {
       throw createHttpError(404, "Auction not found");
