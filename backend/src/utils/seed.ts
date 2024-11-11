@@ -94,7 +94,8 @@ export const seedDatabase = async () => {
       createdAt: new Date(),
     }],
     startingPrice: 10,
-    reservePrice: 20
+    reservePrice: 20,
+    status: 'active'
   });
 
   const auction2 = new auctionModel({
@@ -138,7 +139,8 @@ export const seedDatabase = async () => {
       createdAt: new Date(),
     }],
     startingPrice: 10,
-    reservePrice: 20
+    reservePrice: 20,
+    status: 'active'
   });
 
   const auction3 = new auctionModel({
