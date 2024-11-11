@@ -370,7 +370,7 @@ export const bidAuction: RequestHandler<bidAuctionParams, unknown, bidAuctionBod
 
     await auction.save();
 
-    res.status(200).json(auction.bids);
+    res.status(201).json(auction.bids);
 
   } catch (err) {
     next(err);
@@ -437,7 +437,7 @@ export const messageAuction: RequestHandler<messageAuctionParams, unknown, messa
 
     await auction.save();
 
-    res.status(200).json(auction.messages);
+    res.status(201).json(auction.messages);
 
   } catch (err) {
     next(err);
