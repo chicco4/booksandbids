@@ -111,13 +111,20 @@ export const seedDatabase = async () => {
     },
     duration: {
       start: new Date(),
-      end: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
+      end: new Date(new Date().getTime() + 5 * 60 * 1000), // 5 minute from now
     },
-    bids: [{
-      bidderId: student1._id,
-      amount: 25,
-      createdAt: new Date(),
-    }],
+    bids: [
+      {
+        bidderId: student1._id,
+        amount: 25,
+        createdAt: new Date(),
+      },
+      {
+        bidderId: student1._id,
+        amount: 30,
+        createdAt: new Date(),
+      }
+    ],
     messages: [{
       senderId: student1._id,
       content: "message from student1",
@@ -147,7 +154,7 @@ export const seedDatabase = async () => {
       publisher: "publisher3",
     },
     duration: {
-      start: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
+      start: new Date(new Date().getTime() + 1 * 60 * 1000), // 5 minute from now
       end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minute from now
     },
     startingPrice: 10,
