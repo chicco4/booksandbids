@@ -204,21 +204,21 @@ interface createAuctionBody {
     start?: Date,
     end?: Date,
   };
-  starting_price?: number;
-  reserve_price?: number;
+  startingPrice?: number;
+  reservePrice?: number;
 }
 
 export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, unknown> = async (req, res, next) => {
   const authenticatedUserId = req.session.userId;
   const book = req.body.book;
   const duration = req.body.duration;
-  const starting_price = req.body.starting_price;
-  const reserve_price = req.body.reserve_price;
+  const startingPrice = req.body.startingPrice;
+  const reservePrice = req.body.reservePrice;
 
   try {
     assertIsDefined(authenticatedUserId);
 
-    if (!book! || !duration || !starting_price || !reserve_price) {
+    if (!book! || !duration || !startingPrice || !reservePrice) {
       throw createHttpError(400, "Parameters missing");
     }
 
@@ -234,7 +234,7 @@ export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, 
       throw createHttpError(400, "Invalid duration");
     }
 
-    if (starting_price < 0 || reserve_price < 0) {
+    if (startingPrice < 0 || reservePrice < 0) {
       throw createHttpError(400, "Prices must be positive");
     }
 
@@ -242,8 +242,8 @@ export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, 
       seller_id: authenticatedUserId,
       book: book,
       duration: duration,
-      starting_price: starting_price,
-      reserve_price: reserve_price,
+      starting_price: startingPrice,
+      reserve_price: reservePrice,
     });
 
     res.status(201).json(newAuction);
