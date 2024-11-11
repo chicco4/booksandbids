@@ -31,7 +31,7 @@ const closeExpiredAuctionsAndSetWinner = async () => {
   const expiredAuctions = await auctionModel.find({
     'duration.end': { $lte: now },
     status: "active",
-  });
+  }).select('+bids');
 
   for (const auction of expiredAuctions) {
     // Get the highest bid
