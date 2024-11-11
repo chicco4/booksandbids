@@ -134,14 +134,14 @@ interface updateAuctionBody {
     start?: Date,
     end?: Date,
   };
-  starting_price?: number;
-  reserve_price?: number;
+  startingPrice?: number;
+  reservePrice?: number;
   status?: string;
 }
 
 export const updateAuctionById: RequestHandler<updateAuctionParams, unknown, updateAuctionBody, unknown> = async (req, res, next) => {
   const { auctionId } = req.params;
-  const { book, duration, starting_price, reserve_price, status } = req.body;
+  const { book, duration, startingPrice: starting_price, reservePrice: reserve_price, status } = req.body;
 
   try {
     if (!mongoose.isValidObjectId(auctionId)) {

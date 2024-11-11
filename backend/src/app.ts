@@ -41,6 +41,7 @@ app.use(cors({
 checkAuctions.start();
 
 app.use((req, res, next) => {
+    console.log('---');
     console.log('Session ID:', req.sessionID);
     console.log('Session:', req.session);
     next();
