@@ -31,6 +31,10 @@ const auctionSchema = new mongoose.Schema({
   status: { type: String, enum: ['waiting', 'active', 'succeded', `failed`, 'deleted'], default: 'waiting' },
 }, { timestamps: true });
 
+// excluding bids and messages by default
+auctionSchema.path('bids').select(false);
+auctionSchema.path('messages').select(false);
+
 type Auction = InferSchemaType<typeof auctionSchema>;
 
 export default mongoose.model<Auction>("Auction", auctionSchema);
