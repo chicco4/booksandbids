@@ -121,7 +121,7 @@ export const login: RequestHandler<unknown, unknown, loginBody, unknown> = async
 
     req.session.userId = user._id;
     req.session.userIsModerator = user.isModerator;
-    res.status(201).json(user);
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }

@@ -40,6 +40,7 @@ app.use(cors({
 // Initialize the scheduler
 checkAuctions.start();
 
+// // useful to debug the sessions
 // app.use((req, res, next) => {
 //     console.log('---');
 //     console.log('Session ID:', req.sessionID);
