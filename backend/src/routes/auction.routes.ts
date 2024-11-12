@@ -6,9 +6,10 @@ const router = express.Router();
 
 // /api/auctions
 
-router.get('/', auctionController.searchAuctions);
+
 router.get('/logged', requiresStud, auctionController.getAuthenticatedUserAuctions);
 router.get('/:auctionId', auctionController.getAuctionById);
+router.get('/', auctionController.searchAuctions);
 
 router.put<{ auctionId: string }>('/:auctionId', requiresMod, auctionController.updateAuctionById);
 router.post('/', requiresStud, auctionController.createAuction);

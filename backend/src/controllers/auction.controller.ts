@@ -108,7 +108,7 @@ export const getAuthenticatedUserAuctions: RequestHandler = async (req, res, nex
   try {
     assertIsDefined(authenticatedUserId);
 
-    const auctions = await auctionModel.find({ seller_id: authenticatedUserId }).exec();
+    const auctions = await auctionModel.find({ sellerId: authenticatedUserId }).exec();
 
     res.status(200).json(auctions);
   } catch (err) {
@@ -141,7 +141,7 @@ interface updateAuctionBody {
 
 export const updateAuctionById: RequestHandler<updateAuctionParams, unknown, updateAuctionBody, unknown> = async (req, res, next) => {
   const { auctionId } = req.params;
-  const { book, duration, startingPrice: starting_price, reservePrice: reserve_price, status } = req.body;
+  const { book, duration, startingPrice: startingPrice, reservePrice: reservePrice, status } = req.body;
 
   try {
     if (!mongoose.isValidObjectId(auctionId)) {
@@ -174,8 +174,8 @@ export const updateAuctionById: RequestHandler<updateAuctionParams, unknown, upd
         end: duration.end as NativeDate,
       };
     }
-    if (starting_price) updatedFields.startingPrice = starting_price;
-    if (reserve_price) updatedFields.reservePrice = reserve_price;
+    if (startingPrice) updatedFields.startingPrice = startingPrice;
+    if (reservePrice) updatedFields.reservePrice = reservePrice;
     if (status) updatedFields.status = status as 'waiting' | 'active' | 'succeded' | 'failed' | 'deleted';
 
     // Apply the updates and save the auction
@@ -239,11 +239,11 @@ export const createAuction: RequestHandler<unknown, unknown, createAuctionBody, 
     }
 
     const newAuction = await auctionModel.create({
-      seller_id: authenticatedUserId,
+      sellerId: authenticatedUserId,
       book: book,
       duration: duration,
-      starting_price: startingPrice,
-      reserve_price: reservePrice,
+      startingPrice: startingPrice,
+      reservePrice: reservePrice,
     });
 
     res.status(201).json(newAuction);
