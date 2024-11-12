@@ -45,3 +45,7 @@ we shold create a services folder to separate xpress or any HTTP-specific elemen
 1. Controller receives a request -> validates input -> calls a Service function.
 2. Service processes data or fetches data from a Model (database).
 3. Controller receives data from the Service and sends an appropriate HTTP response.
+
+add websocket to manage real time messages
+
+start using JWT tokens as authentication
