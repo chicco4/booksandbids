@@ -2,16 +2,12 @@
   <mat-card-content>
     <mat-card-header>
       <mat-card-title>{{ auction().book.title }}</mat-card-title>
+      <mat-card-subtitle>{{ auction().book.author }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>
-        {{ auction().book.author }}
-        {{ auction().book.ISBN }}
-        {{ auction().book.course }}
-        {{ auction().book.university }}
-        {{ auction().book.edition }}
-        {{ auction().book.publisher }}
-      </p>
+      <p>{{ timeLeft() }}</p>
+      <!-- <p>bid: {{ auction().bid }}$</p>
+      <p>Posted by: {{ auction().student.username }}</p> -->
     </mat-card-content>
     <mat-card-actions>
       <button mat-stroked-button>View Details</button>
