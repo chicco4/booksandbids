@@ -1,0 +1,7 @@
+<ul id="users">
+  @for (auction of auctions; track auction._id) {
+  <li>
+    <app-auction [auction]="auction" />
+  </li>
+  }
+</ul>

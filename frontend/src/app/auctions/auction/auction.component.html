@@ -1,0 +1,20 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-content>
+    <mat-card-header>
+      <mat-card-title>{{ auction().book.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{ auction().book.author }}
+        {{ auction().book.ISBN }}
+        {{ auction().book.course }}
+        {{ auction().book.university }}
+        {{ auction().book.edition }}
+        {{ auction().book.publisher }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-stroked-button>View Details</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

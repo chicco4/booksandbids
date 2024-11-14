@@ -1,0 +1,11 @@
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+header {
+  text-align: center;
+  padding: 0px;
+  display: flex;
+  justify-content: space-between;
+}
