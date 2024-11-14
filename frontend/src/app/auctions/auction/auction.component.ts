@@ -12,11 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 export class AuctionComponent {
   auction = input.required<Auction>();
 
+  private currentTime = signal(new Date().getTime());
+  private intervalId: any;
+
+  // Compute time left based on the current time
   timeLeft = computed(() => {
-    const auction = this.auction();
-    if (!auction) return 'Loading...';
-    const now = new Date().getTime();
-    const endTime = new Date(auction.duration.end).getTime();
+    const now = this.currentTime();
+    const endTime = new Date(this.auction().duration.end).getTime();
     const timeRemaining = endTime - now;
 
     if (timeRemaining <= 0) return 'Auction ended';
@@ -29,11 +31,16 @@ export class AuctionComponent {
   });
 
   constructor() {
-    effect(() => {
-      const interval = setInterval(() => {
-        this.timeLeft(); // Trigger recalculation
-      }, 1000);
-      return () => clearInterval(interval); // Cleanup on destroy
-    });
+    // Update the `currentTime` signal every second
+    this.intervalId = setInterval(() => {
+      this.currentTime.set(new Date().getTime());
+    }, 1000);
+  }
+
+  ngOnDestroy() {
+    // Clear the interval when the component is destroyed
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 }
