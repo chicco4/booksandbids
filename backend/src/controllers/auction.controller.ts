@@ -362,7 +362,7 @@ export const bidAuction: RequestHandler<bidAuctionParams, unknown, bidAuctionBod
       throw createHttpError(400, "Amount must be higher than the current bid");
     }
 
-    auction.bids.push({
+    auction.bids.unshift({
       bidderId: authenticatedUserId,
       amount: amount,
       createdAt: new Date(),

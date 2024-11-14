@@ -13,7 +13,7 @@ export type Auction = {
   status: 'waiting' | 'active' | 'succeded' | `failed` | 'deleted';
 }
 
-type Book = {
+export type Book = {
   title: string;
   author: string;
   ISBN: string;
@@ -23,14 +23,14 @@ type Book = {
   publisher: string,
 }
 
-type Bid = {
+export type Bid = {
   _id: string,
   bidderId: string,
   amount: number,
   createdAt: Date,
 }
 
-type Message = {
+export type Message = {
   _id: string;
   senderId: string;
   content: string;

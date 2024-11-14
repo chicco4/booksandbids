@@ -60,17 +60,17 @@ export const seedDatabase = async () => {
     },
     duration: {
       start: new Date(),
-      end: new Date(), // now for testing
+      end: new Date(new Date().getTime() + 5 * 60 * 1000),
     },
     bids: [
       {
         bidderId: student2._id,
-        amount: 25,
+        amount: 30,
         createdAt: new Date(),
       },
       {
         bidderId: student2._id,
-        amount: 30,
+        amount: 25,
         createdAt: new Date(),
       }
     ],
@@ -105,17 +105,17 @@ export const seedDatabase = async () => {
     },
     duration: {
       start: new Date(),
-      end: new Date(new Date().getTime() + 5 * 60 * 1000), // 5 minute from now
+      end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minutes from now
     },
     bids: [
       {
         bidderId: student1._id,
-        amount: 25,
+        amount: 30,
         createdAt: new Date(),
       },
       {
         bidderId: student1._id,
-        amount: 30,
+        amount: 25,
         createdAt: new Date(),
       }
     ],
@@ -149,7 +149,7 @@ export const seedDatabase = async () => {
       publisher: "Charles Scribner's Sons",
     },
     duration: {
-      start: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
+      start: new Date(new Date().getTime() + 5 * 60 * 1000), // 5 minute from now
       end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minutes from now
     },
     startingPrice: 10,

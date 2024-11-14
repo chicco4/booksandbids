@@ -5,9 +5,12 @@
       <mat-card-subtitle>{{ auction().book.author }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>{{ timeLeft() }}</p>
-      <!-- <p>bid: {{ auction().bid }}$</p>
-      <p>Posted by: {{ auction().student.username }}</p> -->
+      <p>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="schedule"></mat-icon>
+        {{ timeLeft() }}
+      </p>
+      <p>bid: {{ highestBid }}$</p>
+      <!-- <p>Posted by: {{ auction().student.username }}</p> -->
     </mat-card-content>
     <mat-card-actions>
       <button mat-stroked-button>View Details</button>

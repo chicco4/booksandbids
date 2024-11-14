@@ -1,16 +1,20 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
-import { Auction } from '../../shared/models/auction.model';
+import { Auction, Bid } from '../../shared/models/auction.model';
 import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-auction',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule, MatIconModule],
   templateUrl: './auction.component.html',
   styleUrl: './auction.component.css'
 })
 export class AuctionComponent {
   auction = input.required<Auction>();
+  highestBid = 0;
 
   private currentTime = signal(new Date().getTime());
   private intervalId: any;
@@ -30,7 +34,7 @@ export class AuctionComponent {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   });
 
-  constructor() {
+  constructor(private http: HttpClient) {
     // Update the `currentTime` signal every second
     this.intervalId = setInterval(() => {
       this.currentTime.set(new Date().getTime());
@@ -43,4 +47,16 @@ export class AuctionComponent {
       clearInterval(this.intervalId);
     }
   }
+
+  updateHighestBid() {
+    this.http.get<Auction[]>('http://127.0.0.1:5000/api/auctions/' + this.auction()._id + '/bids').subscribe(data => {
+      if(data) {
+        bids
+      }
+      if (bids.length > 0) {
+        this.highestBid.set(bids[0].amount); // Assuming the highest bid is the first one
+      }
+    });
+  }
+
 }
