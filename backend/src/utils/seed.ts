@@ -5,13 +5,6 @@ import bcrypt from "bcrypt";
 
 export const seedDatabase = async () => {
 
-  // // Check if data already exists
-  // const userCount = await userModel.countDocuments();
-  // if (userCount > 0) {
-  //   console.log('Database already seeded');
-  //   return;
-  // }
-
   // Clear all residual data
   await userModel.deleteMany().exec();
   await auctionModel.deleteMany().exec();
@@ -57,13 +50,13 @@ export const seedDatabase = async () => {
     _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d2f'),
     sellerId: student1._id,
     book: {
-      title: "title1",
-      author: "author1",
-      ISBN: "ISBN1",
-      course: "course1",
-      university: "university1",
-      edition: "edition1",
-      publisher: "publisher1",
+      title: "To Kill a Mockingbird",
+      author: "Harper Lee",
+      ISBN: "978-0-06-112008-4",
+      course: "American Literature",
+      university: "Harvard University",
+      edition: "1st",
+      publisher: "J.B. Lippincott & Co.",
     },
     duration: {
       start: new Date(),
@@ -102,13 +95,13 @@ export const seedDatabase = async () => {
     _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d30'),
     sellerId: student2._id,
     book: {
-      title: "title2",
-      author: "author2",
-      ISBN: "ISBN2",
-      course: "course2",
-      university: "university2",
-      edition: "edition2",
-      publisher: "publisher2",
+      title: "1984",
+      author: "George Orwell",
+      ISBN: "978-0-452-28423-4",
+      course: "Political Science",
+      university: "Stanford University",
+      edition: "1st",
+      publisher: "Secker & Warburg",
     },
     duration: {
       start: new Date(),
@@ -147,17 +140,17 @@ export const seedDatabase = async () => {
     _id: new mongoose.Types.ObjectId('645c1d1e8d5b1b2e2f9e1d31'),
     sellerId: student2._id,
     book: {
-      title: "title3",
-      author: "author3",
-      ISBN: "ISBN3",
-      course: "course3",
-      university: "university3",
-      edition: "edition3",
-      publisher: "publisher3",
+      title: "The Great Gatsby",
+      author: "F. Scott Fitzgerald",
+      ISBN: "978-0-7432-7356-5",
+      course: "English Literature",
+      university: "Yale University",
+      edition: "1st",
+      publisher: "Charles Scribner's Sons",
     },
     duration: {
-      start: new Date(new Date().getTime() + 1 * 60 * 1000), // 5 minute from now
-      end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minute from now
+      start: new Date(new Date().getTime() + 1 * 60 * 1000), // 1 minute from now
+      end: new Date(new Date().getTime() + 30 * 60 * 1000), // 30 minutes from now
     },
     startingPrice: 10,
     reservePrice: 20
