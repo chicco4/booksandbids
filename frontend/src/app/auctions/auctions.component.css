@@ -1,4 +1,7 @@
 ul {
+  margin: 0px;
   list-style: none;
   padding: 0px;
+
+  display: flex;
 }
