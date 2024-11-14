@@ -1,9 +1,8 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { Auction, Bid } from '../../shared/models/auction.model';
 import { MatCardModule } from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-auction',
@@ -22,7 +21,10 @@ export class AuctionComponent {
   // Compute time left based on the current time
   timeLeft = computed(() => {
     const now = this.currentTime();
+    const startTime = new Date(this.auction().duration.start).getTime();
     const endTime = new Date(this.auction().duration.end).getTime();
+
+    if (now < startTime) return 'Auction not yet started';
     const timeRemaining = endTime - now;
 
     if (timeRemaining <= 0) return 'Auction ended';
@@ -47,16 +49,4 @@ export class AuctionComponent {
       clearInterval(this.intervalId);
     }
   }
-
-  updateHighestBid() {
-    this.http.get<Auction[]>('http://127.0.0.1:5000/api/auctions/' + this.auction()._id + '/bids').subscribe(data => {
-      if(data) {
-        bids
-      }
-      if (bids.length > 0) {
-        this.highestBid.set(bids[0].amount); // Assuming the highest bid is the first one
-      }
-    });
-  }
-
 }

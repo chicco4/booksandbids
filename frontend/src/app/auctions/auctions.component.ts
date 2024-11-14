@@ -4,9 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { Auction } from '../shared/models/auction.model';
 import { AuctionComponent } from "./auction/auction.component";
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-auctions',
