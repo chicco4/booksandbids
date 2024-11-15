@@ -46,6 +46,6 @@ we shold create a services folder to separate xpress or any HTTP-specific elemen
 2. Service processes data or fetches data from a Model (database).
 3. Controller receives data from the Service and sends an appropriate HTTP response.
 
-add websocket to manage real time messages
+add websocket to manage real time messages (socket.io)
 
 start using JWT tokens as authentication
