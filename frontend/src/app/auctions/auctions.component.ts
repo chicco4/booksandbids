@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Auction } from '../shared/models/auction.model';
-import { AuctionComponent } from "./auction/auction.component";
+import { Auction } from '../models/auction.model';
+import { AuctionComponent } from "../auction/auction.component";
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

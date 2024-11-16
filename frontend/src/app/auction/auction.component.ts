@@ -1,5 +1,5 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
-import { Auction, Bid } from '../../shared/models/auction.model';
+import { Auction, Bid } from '../models/auction.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
